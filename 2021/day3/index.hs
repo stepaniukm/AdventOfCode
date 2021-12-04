@@ -9,9 +9,9 @@ bintodec x = foldr (\x y -> fromEnum x + 2*y) 0 (reverse x)
 countOnesAndZeros :: Int -> Char -> Int
 countOnesAndZeros sum digit = if digit == '1' then sum + 1 else sum - 1
 
-boolToIntChar :: Bool -> Char
-boolToIntChar True = '1'
-boolToIntChar False = '0'
+boolToChar :: Bool -> Char
+boolToChar True = '1'
+boolToChar False = '0'
 
 charToBool :: Char -> Bool
 charToBool '1' = True
@@ -24,12 +24,12 @@ getBinaryGammaPartOne xs = bintodec rawBooleanGamma where
     sums = map (foldl countOnesAndZeros 0) transposedNumbers
     rawBooleanGamma = map (> 0) sums
 
-getBinaryGammaPartTwo :: [String] -> String
-getBinaryGammaPartTwo xs = rawBinaryGamma where
-    transposedNumbers = transpose xs
+getBinaryGammaPartTwo :: [String] -> Int -> String
+getBinaryGammaPartTwo xs depth = rawBinaryGamma where
+    transposedNumbers = take depth $ transpose xs
     sums = map (foldl countOnesAndZeros 0) transposedNumbers
-    rawBooleanGamma = map (> 0) sums
-    rawBinaryGamma = map boolToIntChar rawBooleanGamma
+    rawBooleanGamma = map (>= 0) sums
+    rawBinaryGamma = map boolToChar rawBooleanGamma
 
 getBinaryEpsilonPartOne :: [String] -> Int
 getBinaryEpsilonPartOne xs = bintodec rawBooleanEpsilon where
@@ -37,24 +37,24 @@ getBinaryEpsilonPartOne xs = bintodec rawBooleanEpsilon where
     sums = map (foldl countOnesAndZeros 0) transposedNumbers
     rawBooleanEpsilon = map (< 0) sums
 
-getBinaryEpsilonPartTwo :: [String] -> String
-getBinaryEpsilonPartTwo xs = rawBinaryEpsilon where
-    transposedNumbers = transpose xs
+getBinaryEpsilonPartTwo :: [String] -> Int -> String
+getBinaryEpsilonPartTwo xs depth = rawBinaryEpsilon where
+    transposedNumbers = take depth $ transpose xs
     sums = map (foldl countOnesAndZeros 0) transposedNumbers
     rawBooleanEpsilon = map (< 0) sums
-    rawBinaryEpsilon = map boolToIntChar rawBooleanEpsilon
+    rawBinaryEpsilon = map boolToChar rawBooleanEpsilon
 
 filterToOneNumberGamma :: [String] -> Int -> String
 filterToOneNumberGamma [one] _ = one
 filterToOneNumberGamma xs depth = filterToOneNumberGamma filtered (depth + 1) where
-    nextBinaryGamma = getBinaryGammaPartTwo xs
-    filtered = filter (\num -> take depth nextBinaryGamma `isPrefixOf` num) xs
+    nextBinaryGamma = getBinaryGammaPartTwo xs depth
+    filtered = filter (isPrefixOf nextBinaryGamma) xs
 
 filterToOneNumberEpsilon :: [String] -> Int -> String
 filterToOneNumberEpsilon [one] _ = one
 filterToOneNumberEpsilon xs depth = filterToOneNumberEpsilon filtered (depth + 1) where
-    nextBinaryEpsilon = getBinaryEpsilonPartTwo xs
-    filtered = filter (\num -> take depth nextBinaryEpsilon `isPrefixOf` num) xs
+    nextBinaryEpsilon = getBinaryEpsilonPartTwo xs depth
+    filtered = filter (isPrefixOf nextBinaryEpsilon) xs
 
 main :: IO ()
 main = do
