@@ -67,7 +67,6 @@ main = do
   let gammaRating = bintodec $ map charToBool $ filterToOneNumberGamma numbers 1
   let epsilonRating = bintodec $ map charToBool $ filterToOneNumberEpsilon numbers 1
 
-  -- for unknown reasons the epsilonRating is not working and yields infinite loop 
   writeFile "output.txt" $ show gamma ++ " * " ++ show epsilon ++ " = " ++ show (gamma * epsilon) ++ "\n" ++ show gammaRating ++ " * " ++ show epsilonRating ++ " = " ++ show (gammaRating * epsilonRating)
 
   return ()
