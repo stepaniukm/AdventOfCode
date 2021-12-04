@@ -41,7 +41,7 @@ getBinaryEpsilonPartTwo :: [String] -> Int -> String
 getBinaryEpsilonPartTwo xs depth = rawBinaryEpsilon where
     transposedNumbers = take depth $ transpose xs
     sums = map (foldl countOnesAndZeros 0) transposedNumbers
-    rawBooleanEpsilon = map (< 0) sums
+    rawBooleanEpsilon = map (<= 0) sums
     rawBinaryEpsilon = map boolToChar rawBooleanEpsilon
 
 filterToOneNumberGamma :: [String] -> Int -> String
