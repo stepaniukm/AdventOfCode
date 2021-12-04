@@ -41,20 +41,20 @@ getBinaryEpsilonPartTwo :: [String] -> Int -> String
 getBinaryEpsilonPartTwo xs depth = rawBinaryEpsilon where
     transposedNumbers = take depth $ transpose xs
     sums = map (foldl countOnesAndZeros 0) transposedNumbers
-    rawBooleanEpsilon = map (<= 0) sums
+    rawBooleanEpsilon = map (< 0) sums
     rawBinaryEpsilon = map boolToChar rawBooleanEpsilon
 
 filterToOneNumberGamma :: [String] -> Int -> String
 filterToOneNumberGamma [one] _ = one
 filterToOneNumberGamma xs depth = filterToOneNumberGamma filtered (depth + 1) where
     nextBinaryGamma = getBinaryGammaPartTwo xs depth
-    filtered = filter (isPrefixOf nextBinaryGamma) xs
+    filtered = filter (\num -> nextBinaryGamma!!(depth-1) == num!!(depth-1)) xs
 
 filterToOneNumberEpsilon :: [String] -> Int -> String
 filterToOneNumberEpsilon [one] _ = one
 filterToOneNumberEpsilon xs depth = filterToOneNumberEpsilon filtered (depth + 1) where
     nextBinaryEpsilon = getBinaryEpsilonPartTwo xs depth
-    filtered = filter (isPrefixOf nextBinaryEpsilon) xs
+    filtered = filter (\num -> nextBinaryEpsilon!!(depth - 1) == num!!(depth-1)) xs
 
 main :: IO ()
 main = do
@@ -68,6 +68,6 @@ main = do
   let epsilonRating = bintodec $ map charToBool $ filterToOneNumberEpsilon numbers 1
 
   -- for unknown reasons the epsilonRating is not working and yields infinite loop 
-  writeFile "output.txt" $ show gamma ++ " * " ++ show epsilon ++ " = " ++ show (gamma * epsilon) ++ "\n" ++ show gammaRating ++ " * " -- ++ show epsilonRating ++ " = " ++ show (gammaRating * epsilonRating)
+  writeFile "output.txt" $ show gamma ++ " * " ++ show epsilon ++ " = " ++ show (gamma * epsilon) ++ "\n" ++ show gammaRating ++ " * " ++ show epsilonRating ++ " = " ++ show (gammaRating * epsilonRating)
 
   return ()
