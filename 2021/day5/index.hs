@@ -42,9 +42,9 @@ countOccurrences (xy:xys) occurrences = countOccurrences xys connectedOccurrence
   updatedOccurrences = foldl (\m p -> M.insertWith (+) (pointToString p) 1 m) occurrences points
   connectedOccurrences = M.union updatedOccurrences newOccurrences
 
-countOccurancesWithDiagonals :: [((Int, Int), (Int, Int))] -> M.Map String Int -> M.Map String Int
-countOccurancesWithDiagonals [] occurrences = occurrences
-countOccurancesWithDiagonals (xy:xys) occurrences = countOccurancesWithDiagonals xys connectedOccurrences where
+countOccurrencesWithDiagonals :: [((Int, Int), (Int, Int))] -> M.Map String Int -> M.Map String Int
+countOccurrencesWithDiagonals [] occurrences = occurrences
+countOccurrencesWithDiagonals (xy:xys) occurrences = countOccurrencesWithDiagonals xys connectedOccurrences where
   ((x1, y1), (x2, y2)) = xy
   linePoints = lp2 x1 y1 x2 y2
   partitionByExistence p = maybeToBool $ M.lookup (pointToString p) occurrences
@@ -63,7 +63,7 @@ main = do
   let count = countOccurrences filteredLines M.empty
   let overOrTwo = length $ filter (>= 2) $ M.elems count
 
-  let count2 = countOccurancesWithDiagonals parsedLines M.empty
+  let count2 = countOccurrencesWithDiagonals parsedLines M.empty
   let overOrTwo2 = length $ filter (>= 2) $ M.elems count2
 
   writeFile "output.txt" $ show overOrTwo ++ "\n" ++ show overOrTwo2
