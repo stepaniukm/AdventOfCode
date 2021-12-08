@@ -4,7 +4,6 @@ import Data.Maybe (fromMaybe)
 import Data.List ((\\), nub, sort, partition)
 import qualified Data.IntMap as IM
 import qualified Data.Map as M
-import Text.XHtml (input)
 
 partOne :: [([String], [String])] -> Int
 partOne ls = sumOfLines where
@@ -31,12 +30,12 @@ deduceCorrectSignalsFromSignals xs = correctMap where
   sectorA = diffSectors seven one
   sectorsBD = diffSectors four one
   sectorsEG = diffSectors eight $ addSectors four sectorA
-  (sixL, r5) = partition (\x -> length (addSectors x one) == 7 && x /= eight) r4
-  (nineL, r6) = partition (\x -> length (addSectors x sectorsEG) == 7 && x /= eight) r5
-  (zeroL, r7) = partition (\x -> length (addSectors x sectorsBD) == 7 && x /= eight) r6
-  (threeL, r8) = partition (\x -> length (diffSectors x one) == 3 && x /= seven) r7
+  (sixL, r5) = partition (\x -> length (addSectors x one) == 7) r4
+  (nineL, r6) = partition (\x -> length (addSectors x sectorsEG) == 7) r5
+  (zeroL, r7) = partition (\x -> length (addSectors x sectorsBD) == 7) r6
+  (threeL, r8) = partition (\x -> length (diffSectors x one) == 3) r7
   (six, nine, zero, three) = (head sixL, head nineL, head zeroL, head threeL)
-  (fiveL, r9) = partition (\x -> length (diffSectors six x) == 1 && x /= eight) r8
+  (fiveL, r9) = partition (\x -> length (diffSectors six x) == 1) r8
   five = head fiveL
   two = head r9
   correctMap = M.fromList [(sort zero, 0), (sort one, 1), (sort two, 2), (sort three, 3), (sort four, 4), (sort five, 5), (sort six, 6), (sort seven, 7), (sort eight, 8), (sort nine, 9)]
