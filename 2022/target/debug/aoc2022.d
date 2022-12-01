@@ -1,1 +1,0 @@
-/Users/mateuszstepaniuk/Projekty/Personal/AdventOfCode/2022/target/debug/aoc2022: /Users/mateuszstepaniuk/Projekty/Personal/AdventOfCode/2022/src/day1/mod.rs /Users/mateuszstepaniuk/Projekty/Personal/AdventOfCode/2022/src/main.rs
