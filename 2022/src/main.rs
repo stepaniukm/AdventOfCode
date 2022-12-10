@@ -1,6 +1,7 @@
 use std::fs;
 
 pub mod day1;
+pub mod day10;
 pub mod day2;
 pub mod day3;
 pub mod day4;
@@ -11,9 +12,15 @@ pub mod day8;
 pub mod day9;
 
 fn main() {
-    let file_content = fs::read_to_string("src/day9/input.txt").expect("This file has to exist");
-    let result = day9::solution_a(file_content.as_str());
-    let result2 = day9::solution_b(file_content.as_str());
+    let file_content = fs::read_to_string("src/day10/input.txt").expect("This file has to exist");
+    let result = day10::solution_a(file_content.as_str());
+    let result2 = day10::solution_b(file_content.as_str());
 
-    println!("{} {}", result, result2);
+    println!("{}", result);
+    for a in result2 {
+        for b in a {
+            print!("{} ", b);
+        }
+        println!("");
+    }
 }
