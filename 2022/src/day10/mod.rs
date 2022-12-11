@@ -45,8 +45,6 @@ pub fn solution_a(input: &str) -> isize {
 pub fn solution_b(input: &str) -> Vec<Vec<String>> {
     let register_history = get_register_history(input);
 
-    println!("HISTORY {:?}", register_history);
-
     return (0..)
         .take(6 * 40)
         .collect::<Vec<_>>()
