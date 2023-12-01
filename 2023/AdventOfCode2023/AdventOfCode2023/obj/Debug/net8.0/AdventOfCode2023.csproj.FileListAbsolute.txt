@@ -13,3 +13,4 @@
 /Users/mateuszstepaniuk/Projekty/Personal/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023/obj/Debug/net8.0/AdventOfCode2023.pdb
 /Users/mateuszstepaniuk/Projekty/Personal/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023/obj/Debug/net8.0/AdventOfCode2023.genruntimeconfig.cache
 /Users/mateuszstepaniuk/Projekty/Personal/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023/obj/Debug/net8.0/ref/AdventOfCode2023.dll
+/Users/mateuszstepaniuk/Projekty/Personal/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023/bin/Debug/net8.0/Day1/test.txt
