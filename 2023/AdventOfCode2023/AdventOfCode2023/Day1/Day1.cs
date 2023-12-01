@@ -2,29 +2,23 @@ using System.Text;
 
 namespace AdventOfCode2023.Day1;
 
-public class Day1
+public static class Day1
 {
-    public int Part1(List<string> lines)
+    public static int Part1(IEnumerable<string> lines)
     {
-        var result = lines.ConvertAll((line) =>
+        var result = lines.Select(line =>
         {
-            var charIndices = new List<int>();
-            foreach (var item in line.Select(((c, i) => new { c, i })))
-            {
-                if (Char.IsNumber(item.c))
-                {
-                    charIndices.Add(item.i);
-                }
-            }
+            var charIndices = (
+                from item in line
+                where char.IsNumber(item)
+                select item
+            ).ToList();
 
             var first = charIndices.First();
             var last = charIndices.Last();
 
-            var firstItem = line[first];
-            var lastItem = line[last];
+            var num = int.Parse($"{first}{last}");
 
-            var num = Int32.Parse($"{firstItem}{lastItem}");
-            
             return num;
         }).Sum();
 
@@ -32,60 +26,54 @@ public class Day1
     }
 
 
-    private List<string> PrepareLine(string line)
+    private static List<string?> PrepareLine(string line)
     {
-        Dictionary<string, string> stringToNum = new Dictionary<string, string>();
-        stringToNum.Add("one", "1");
-        stringToNum.Add("two", "2");
-        stringToNum.Add("three", "3");
-        stringToNum.Add("four", "4");
-        stringToNum.Add("five", "5");
-        stringToNum.Add("six", "6");
-        stringToNum.Add("seven", "7");
-        stringToNum.Add("eight", "8");
-        stringToNum.Add("nine", "9");
-        stringToNum.Add("zero", "0");
-        
-        var listOfBuffers = new List<StringBuilder>();
-        
-        foreach (var item in line)
+        var stringToNum = new Dictionary<string, string>
         {
-            var newBuffer = new StringBuilder();
-            listOfBuffers.Add(newBuffer);
-            listOfBuffers.ForEach((buffer) => buffer.Append(item));
-        }
+            { "one", "1" },
+            { "two", "2" },
+            { "three", "3" },
+            { "four", "4" },
+            { "five", "5" },
+            { "six", "6" },
+            { "seven", "7" },
+            { "eight", "8" },
+            { "nine", "9" },
+            { "zero", "0" }
+        };
 
-        var parseBuffersToNumbers = listOfBuffers.ConvertAll((buffer) =>
-        {
-            var str = buffer.ToString();
 
-            var maybeCharNum = str[0];
-
-            if (Char.IsNumber(maybeCharNum))
+        var parseBuffersToNumbers = Enumerable
+            .Range(0, line.Length)
+            .Select(item => line[item..])
+            .Select(buffer =>
             {
-                return maybeCharNum.ToString();
-            }
+                var str = buffer.ToString();
+                var maybeCharNum = str.First();
 
-            var foundKey = stringToNum.Keys.FirstOrDefault((key) => str.StartsWith(key));
-            
-            return stringToNum.GetValueOrDefault(foundKey);
-        }).Where((c) => c != null).ToList();
+                if (char.IsNumber(maybeCharNum))
+                {
+                    return maybeCharNum.ToString();
+                }
+
+                var foundKey = stringToNum.Keys.FirstOrDefault(key => str.StartsWith(key));
+                return foundKey != null ? stringToNum.GetValueOrDefault(foundKey) : null;
+            }).Where(c => c != null).ToList();
 
         return parseBuffersToNumbers;
     }
-    public int Part2(List<string> lines)
+
+    public static int Part2(List<string> lines)
     {
-        var result = lines.ConvertAll((line) =>
+        var result = lines.ConvertAll(line =>
         {
             var preparedLine = PrepareLine(line);
 
             var firstItem = preparedLine.First();
             var lastItem = preparedLine.Last();
 
-            var num = Int32.Parse($"{firstItem}{lastItem}");
-            
-            Console.WriteLine(num);
-            
+            var num = int.Parse($"{firstItem}{lastItem}");
+
             return num;
         }).Sum();
 
