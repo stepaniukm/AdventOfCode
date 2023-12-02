@@ -62,7 +62,7 @@ public static class Day1
 
         return parseBuffersToNumbers;
     }
-
+    
     public static int Part2(List<string> lines)
     {
         var result = lines.ConvertAll(line =>
