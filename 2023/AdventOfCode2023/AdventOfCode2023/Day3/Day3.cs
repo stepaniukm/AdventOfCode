@@ -100,29 +100,17 @@ public static class Day3
     
     private static IEnumerable<Cell> GetNeighbors(IEnumerable<IEnumerable<Cell>> board, Cell cell, IEnumerable<Cell> currentNeighbours)
     {
-        var neighbors = new List<Cell>();
-        var x = cell.X;
-        var y = cell.Y;
-        var left = x - 1;
-        var right = x + 1;
-        var top = y - 1;
-        var bottom = y + 1;
-        var leftCell = board.ElementAtOrDefault(y)?.ElementAtOrDefault(left);
-        var rightCell = board.ElementAtOrDefault(y)?.ElementAtOrDefault(right);
-        var topCell = board.ElementAtOrDefault(top)?.ElementAtOrDefault(x);
-        var bottomCell = board.ElementAtOrDefault(bottom)?.ElementAtOrDefault(x);
-        var topLeftCell = board.ElementAtOrDefault(top)?.ElementAtOrDefault(left);
-        var topRightCell = board.ElementAtOrDefault(top)?.ElementAtOrDefault(right);
-        var bottomLeftCell = board.ElementAtOrDefault(bottom)?.ElementAtOrDefault(left);
-        var bottomRightCell = board.ElementAtOrDefault(bottom)?.ElementAtOrDefault(right);
-        if (leftCell != null && (!char.IsNumber(leftCell.Value)) && !currentNeighbours.Contains(leftCell)) neighbors.Add(leftCell);
-        if (rightCell != null && (!char.IsNumber(rightCell.Value)) && !currentNeighbours.Contains(rightCell)) neighbors.Add(rightCell);
-        if (topCell != null && (!char.IsNumber(topCell.Value)) && !currentNeighbours.Contains(topCell)) neighbors.Add(topCell);
-        if (bottomCell != null && (!char.IsNumber(bottomCell.Value)) && !currentNeighbours.Contains(bottomCell)) neighbors.Add(bottomCell);
-        if (topLeftCell != null && (!char.IsNumber(topLeftCell.Value)) && !currentNeighbours.Contains(topLeftCell)) neighbors.Add(topLeftCell);
-        if (topRightCell != null && (!char.IsNumber(topRightCell.Value)) && !currentNeighbours.Contains(topRightCell)) neighbors.Add(topRightCell);
-        if (bottomLeftCell != null && (!char.IsNumber(bottomLeftCell.Value)) && !currentNeighbours.Contains(bottomLeftCell)) neighbors.Add(bottomLeftCell);
-        if (bottomRightCell != null && (!char.IsNumber(bottomRightCell.Value)) && !currentNeighbours.Contains(bottomRightCell)) neighbors.Add(bottomRightCell);
+        var neighborsVectors = new List<(int, int)>() { (-1,-1), (0,-1), (1,-1), (-1,0), (1,0), (-1,1), (0,1), (1,1) };
+        var neighbors = neighborsVectors.Select(vector =>
+        {
+            var neighborCell = board.ElementAtOrDefault(cell.Y + vector.Item2)
+                ?.ElementAtOrDefault(cell.X + vector.Item1);
+            
+            return neighborCell != null && (!char.IsNumber(neighborCell.Value)) &&
+                   !currentNeighbours.Contains(neighborCell)
+                ? neighborCell
+                : null;
+        }).OfType<Cell>();
         
         return neighbors;
     }
