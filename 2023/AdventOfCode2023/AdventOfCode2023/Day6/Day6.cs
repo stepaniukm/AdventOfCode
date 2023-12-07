@@ -31,8 +31,8 @@ public static class Day6
         
         var better = Enumerable.Range(1, (int) race.time - 1).Select(pressingTime =>
         {
-            var v = A * (ulong)pressingTime;
-            var s = v * (race.time - (ulong)pressingTime);
+            var v = A * (ulong) pressingTime;
+            var s = v * (race.time - (ulong) pressingTime);
 
             return s > race.distance ? s : 0;
         }).Count(n => n != 0);
