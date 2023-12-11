@@ -1,12 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using AdventOfCode2023.Day9;
+using AdventOfCode2023.Day11;
 
-var lines = File.ReadAllText("./Day9/input.txt").Split("\n");
-var result = Day9.Part1(lines);
+var lines = File.ReadAllText("./Day11/input.txt").Split("\n").ToList();
+var result = Day11.Part1(lines);
 
-// var lines2 = File.ReadAllText("./Day8/test2.txt").Split("\n");
-var result2 = Day9.Part2(lines);
+// var lines2 = File.ReadAllText("./Day10/test2.txt").Split("\n").ToList();
+var result2 = Day11.Part2(lines);
 
 Console.WriteLine("-------");
 Console.WriteLine(result);
