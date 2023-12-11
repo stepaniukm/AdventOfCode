@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "Run",
+            "type": "dotnet",
+            "workingDir": "/Users/mateuszstepaniuk/Projekty/Personal/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023",
+            "allowParallelRun": true,
+            "solutionPath": "/Users/mateuszstepaniuk/Projekty/Personal/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023.sln",
+            "projectPath": "/Users/mateuszstepaniuk/Projekty/Personal/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023/AdventOfCode2023.csproj",
+            "targetFramework": "net8.0",
+            "args": []
+        }
+    ]
+}
