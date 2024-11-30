@@ -1,8 +1,9 @@
 {
   "tasks": {
-    "dev": "deno run --watch main.ts"
+    "start": "deno run --allow-read main.ts"
   },
   "imports": {
-    "@std/assert": "jsr:@std/assert@1"
+    "@std/assert": "jsr:@std/assert@1",
+    "immutable": "npm:immutable@5.0.3"
   }
 }

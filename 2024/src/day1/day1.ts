@@ -1,6 +1,12 @@
+import { Range, Record } from "immutable";
+
 export const part1 = (_input: string[]): number => {
-  return 0;
+  return Range(0, 10)
+    .toSeq()
+    .reduce((a, b) => a + b);
 };
 export const part2 = (_input: string[]): number => {
-  return 0;
+  return Record({ a: 1, b: 2, c: 3 })()
+    .toSeq()
+    .reduce((a, b) => a + b);
 };
