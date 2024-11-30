@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/mateuszstepaniuk/Projekty/Personal/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023/AdventOfCode2023.csproj": {}
+    "/Users/mateuszstepaniuk/Projekty/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023/AdventOfCode2023.csproj": {}
   },
   "projects": {
-    "/Users/mateuszstepaniuk/Projekty/Personal/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023/AdventOfCode2023.csproj": {
+    "/Users/mateuszstepaniuk/Projekty/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023/AdventOfCode2023.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/mateuszstepaniuk/Projekty/Personal/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023/AdventOfCode2023.csproj",
+        "projectUniqueName": "/Users/mateuszstepaniuk/Projekty/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023/AdventOfCode2023.csproj",
         "projectName": "AdventOfCode2023",
-        "projectPath": "/Users/mateuszstepaniuk/Projekty/Personal/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023/AdventOfCode2023.csproj",
+        "projectPath": "/Users/mateuszstepaniuk/Projekty/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023/AdventOfCode2023.csproj",
         "packagesPath": "/Users/mateuszstepaniuk/.nuget/packages/",
-        "outputPath": "/Users/mateuszstepaniuk/Projekty/Personal/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023/obj/",
+        "outputPath": "/Users/mateuszstepaniuk/Projekty/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/mateuszstepaniuk/.nuget/NuGet/NuGet.Config"
@@ -32,7 +32,13 @@
           "warnAsError": [
             "NU1605"
           ]
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "all"
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -48,12 +54,26 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.11, 8.0.11]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.osx-arm64",
+              "version": "[8.0.11, 8.0.11]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.11, 8.0.11]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

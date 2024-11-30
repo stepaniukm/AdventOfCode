@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "D41Q+VgIkV5ELn8uVkfIBpVYll3+5ApR4mas3KFR85haOHbl1BUBZzoKe6Jp+ripRlwPXz9Fp8+Kz+l7aO3lrA==",
+  "dgSpecHash": "77xHDLzjYD0=",
   "success": true,
-  "projectFilePath": "/Users/mateuszstepaniuk/Projekty/Personal/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023/AdventOfCode2023.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/Users/mateuszstepaniuk/Projekty/AdventOfCode/2023/AdventOfCode2023/AdventOfCode2023/AdventOfCode2023.csproj",
+  "expectedPackageFiles": [
+    "/Users/mateuszstepaniuk/.nuget/packages/microsoft.netcore.app.ref/8.0.11/microsoft.netcore.app.ref.8.0.11.nupkg.sha512",
+    "/Users/mateuszstepaniuk/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.11/microsoft.aspnetcore.app.ref.8.0.11.nupkg.sha512",
+    "/Users/mateuszstepaniuk/.nuget/packages/microsoft.netcore.app.host.osx-arm64/8.0.11/microsoft.netcore.app.host.osx-arm64.8.0.11.nupkg.sha512"
+  ],
   "logs": []
 }
