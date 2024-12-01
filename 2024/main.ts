@@ -1,10 +1,9 @@
 import { part1, part2 } from "./src/day1/day1.ts";
-import { getLines } from "./src/utils/string.ts";
+import { aoc } from "#utils/aoc.ts";
 
-const inputText = await Deno.readTextFile("./src/day1/input.txt");
-const lines = getLines(inputText);
+const day = "1";
+const baseUrl = import.meta.dirname!;
 
-const result1 = part1(lines);
-const result2 = part2(lines);
+const result = await aoc({ day, baseUrl, part1, part2 });
 
-console.log({ result1, result2 });
+console.log(result);
