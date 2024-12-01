@@ -1,10 +1,12 @@
-import { zip } from "@std/collections";
+import { zip, sumOf } from "@std/collections";
+import { countOccurrences } from "../utils/array.ts";
+import { identity } from "../utils/misc.ts";
 
 const common = (input: string[]) => {
   const parsedInput = input
     .map((line) => {
-      const [num1, num2] = line.split("   ");
-      return [Number(num1), Number(num2)] as const;
+      const [num1, num2] = line.split("   ").map((num) => Number(num));
+      return [num1, num2] as const;
     })
     .reduce(
       (acc, b) => {
@@ -22,35 +24,26 @@ export const part1 = (input: string[]): number => {
   const parsedInput = common(input);
   const sortedA = parsedInput.a.toSorted();
   const sortedB = parsedInput.b.toSorted();
-  const zipped = zip(sortedA, sortedB);
-  const mapped = zipped.map(([a, b]) => Math.abs(a - b));
-  const sum = mapped.reduce((acc, b) => acc + b, 0);
+  const differences = zip(sortedA, sortedB).map(([a, b]) => Math.abs(a - b));
+  const sumOfDifferences = sumOf(differences, identity);
 
-  return sum;
+  return sumOfDifferences;
 };
 export const part2 = (input: string[]): number => {
   const parsedInput = common(input);
 
-  const occurancesByNumber = parsedInput.b.reduce((acc, curr) => {
-    if (curr in acc) {
-      acc[curr]++;
-    } else {
-      acc[curr] = 1;
+  const occurrencesByNumber = countOccurrences(parsedInput.b);
+
+  const productsOfOccurrencesAndNumbers = parsedInput.a.flatMap((num) => {
+    const occurrencesOfNum = occurrencesByNumber[num];
+    if (!occurrencesOfNum) {
+      return [];
     }
-    return acc;
-  }, {} as Record<number, number>);
 
-  const result = parsedInput.a
-    .map((num) => {
-      const occurancesOfNum = occurancesByNumber[num];
-      console.log({ occurancesOfNum });
-      if (!occurancesOfNum) {
-        return 0;
-      }
+    return [occurrencesOfNum * num];
+  });
 
-      return occurancesOfNum * num;
-    })
-    .reduce((acc, curr) => acc + curr, 0);
+  const sum = sumOf(productsOfOccurrencesAndNumbers, identity);
 
-  return result;
+  return sum;
 };
