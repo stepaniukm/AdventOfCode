@@ -5,6 +5,7 @@
     "jsr:@std/collections@^1.0.9": "1.0.9",
     "jsr:@std/data-structures@^1.0.4": "1.0.4",
     "jsr:@std/internal@^1.0.5": "1.0.5",
+    "jsr:@std/path@^1.0.8": "1.0.8",
     "npm:immutable@5.0.3": "5.0.3"
   },
   "jsr": {
@@ -22,6 +23,9 @@
     },
     "@std/internal@1.0.5": {
       "integrity": "54a546004f769c1ac9e025abd15a76b6671ddc9687e2313b67376125650dc7ba"
+    },
+    "@std/path@1.0.8": {
+      "integrity": "548fa456bb6a04d3c1a1e7477986b6cffbce95102d0bb447c67c4ee70e0364be"
     }
   },
   "npm": {
@@ -34,6 +38,7 @@
       "jsr:@std/assert@1",
       "jsr:@std/collections@^1.0.9",
       "jsr:@std/data-structures@^1.0.4",
+      "jsr:@std/path@^1.0.8",
       "npm:immutable@5.0.3"
     ]
   }
