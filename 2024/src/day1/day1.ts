@@ -1,6 +1,6 @@
 import { zip, sumOf } from "@std/collections";
-import { countOccurrences } from "../utils/array.ts";
-import { identity } from "../utils/misc.ts";
+import { countOccurrences } from "#utils/array.ts";
+import { identity } from "#utils/misc.ts";
 
 const common = (input: string[]) => {
   const parsedInput = input

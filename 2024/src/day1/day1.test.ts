@@ -1,7 +1,7 @@
 import { part1, part2 } from "./day1.ts";
 import { assertEquals } from "@std/assert";
 import { join } from "@std/path";
-import { getLines } from "../utils/string.ts";
+import { getLines } from "#utils/string.ts";
 
 Deno.test("part1 - simple input", async () => {
   const simplePath = join(import.meta.dirname!, "simple-input.txt");
