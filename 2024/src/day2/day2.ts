@@ -1,20 +1,14 @@
-import { zip, sumOf, slidingWindows } from "@std/collections";
-import {} from "#utils/array.ts";
-import { identity } from "#utils/misc.ts";
+import { slidingWindows } from "@std/collections";
+import { getDifferences } from "#utils/array.ts";
 
 export const part1 = (input: string[]): number => {
-  const parsedInput = input.map((line) =>
-    line.split(" ").map((num) => Number(num))
-  );
+  const parsedInput = getParsedInput(input);
 
   const amountOfSafeReports = parsedInput.reduce((acc, report) => {
-    const differences = slidingWindows(report, 2).map(([a, b]) => {
-      return b - a;
-    });
+    const differences = getDifferences(report);
 
-    const allPositive = differences.every((diff) => diff > 0);
-    const allNegative = differences.every((diff) => diff < 0);
-    const allBelowOrEqual3 = differences.every((diff) => Math.abs(diff) <= 3);
+    const { allPositive, allBelowOrEqual3, allNegative } =
+      getDifferencesStats(differences);
 
     if ((allPositive && allBelowOrEqual3) || (allNegative && allBelowOrEqual3))
       return acc + 1;
@@ -25,18 +19,12 @@ export const part1 = (input: string[]): number => {
   return amountOfSafeReports;
 };
 export const part2 = (input: string[]): number => {
-  const parsedInput = input.map((line) =>
-    line.split(" ").map((num) => Number(num))
-  );
-
+  const parsedInput = getParsedInput(input);
   const amountOfSafeReports = parsedInput.reduce((acc, report) => {
-    const differences = slidingWindows(report, 2).map(([a, b]) => {
-      return b - a;
-    });
+    const differences = getDifferences(report);
 
-    const allPositive = differences.every((diff) => diff > 0);
-    const allNegative = differences.every((diff) => diff < 0);
-    const allBelowOrEqual3 = differences.every((diff) => Math.abs(diff) <= 3);
+    const { allPositive, allBelowOrEqual3, allNegative } =
+      getDifferencesStats(differences);
 
     if ((allPositive && allBelowOrEqual3) || (allNegative && allBelowOrEqual3))
       return acc + 1;
@@ -49,19 +37,14 @@ export const part2 = (input: string[]): number => {
 
       const combined = leftArray.concat(rightArray);
 
-      const combinedDifferences = slidingWindows(combined, 2).map(([a, b]) => {
-        return b - a;
-      });
+      const combinedDifferences = getDifferences(combined);
 
-      const allCombinedPositive = combinedDifferences.every((diff) => diff > 0);
-      const allCombinedNegative = combinedDifferences.every((diff) => diff < 0);
-      const allCombinedBelowOrEqual3 = combinedDifferences.every(
-        (diff) => Math.abs(diff) <= 3
-      );
+      const { allPositive, allNegative, allBelowOrEqual3 } =
+        getDifferencesStats(combinedDifferences);
 
       if (
-        (allCombinedPositive && allCombinedBelowOrEqual3) ||
-        (allCombinedNegative && allCombinedBelowOrEqual3)
+        (allPositive && allBelowOrEqual3) ||
+        (allNegative && allBelowOrEqual3)
       )
         return acc + 1;
 
@@ -72,4 +55,20 @@ export const part2 = (input: string[]): number => {
   }, 0);
 
   return amountOfSafeReports;
+};
+
+const getDifferencesStats = (differences: Array<number>) => {
+  const allPositive = differences.every((diff) => diff > 0);
+  const allNegative = differences.every((diff) => diff < 0);
+  const allBelowOrEqual3 = differences.every((diff) => Math.abs(diff) <= 3);
+
+  return { allPositive, allNegative, allBelowOrEqual3 } as const;
+};
+
+const getParsedInput = (input: Array<string>) => {
+  const parsedInput = input.map((line) =>
+    line.split(" ").map((num) => Number(num))
+  );
+
+  return parsedInput;
 };

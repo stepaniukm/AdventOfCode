@@ -40,5 +40,5 @@ Deno.test("part2 - input", async () => {
 
   const result = part2(lines);
 
-  assertEquals(result, 24349736);
+  assertEquals(result, 301);
 });

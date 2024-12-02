@@ -1,3 +1,5 @@
+import { slidingWindows } from "@std/collections";
+
 export const countOccurrences = <T extends PropertyKey>(
   array: Array<T>
 ): Record<T, number> => {
@@ -12,3 +14,8 @@ export const countOccurrences = <T extends PropertyKey>(
 
   return occurrencesGroups;
 };
+
+export const getDifferences = (numbers: Array<number>) =>
+  slidingWindows(numbers, 2).map(([a, b]) => {
+    return b - a;
+  });
