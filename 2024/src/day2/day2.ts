@@ -1,4 +1,3 @@
-import { slidingWindows } from "@std/collections";
 import { getDifferences } from "#utils/array.ts";
 
 export const part1 = (input: string[]): number => {
