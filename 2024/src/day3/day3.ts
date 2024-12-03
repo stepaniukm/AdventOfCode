@@ -25,7 +25,7 @@ export const part2 = (input: string[]): number => {
     if (!firstBiggerDo) {
       const lastMulIndex = muls.at(-1)!.index!;
       if (lastMulIndex > dontIndex) {
-        return [[dontIndex, lastMulIndex + 1] as const];
+        return [[dontIndex, oneBigString.length] as const];
       }
       return [];
     }
