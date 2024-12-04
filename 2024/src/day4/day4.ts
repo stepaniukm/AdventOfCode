@@ -1,17 +1,16 @@
-const word = "XMAS";
-type Position = [row: number, column: number];
+import { getCharMap } from "#utils/array.ts";
+import { getNeighborVectors, Position } from "#utils/misc.ts";
+
+const WORD_TO_SEARCH = "XMAS";
 
 export const part1 = (input: string[]): number => {
-  const map = input.map((line) => {
-    return [...line].map((char) => {
-      return char;
-    });
-  });
+  const map = getCharMap(input);
 
   const startPositions = map.reduce((acc, line, lineIndex) => {
     return acc.concat(
       line.flatMap((char, charIndex) => {
-        if (char === word.at(0)) return [[lineIndex, charIndex] as const];
+        if (char === WORD_TO_SEARCH.at(0))
+          return [[lineIndex, charIndex] as const];
         return [];
       })
     );
@@ -30,7 +29,6 @@ export const part1 = (input: string[]): number => {
         currentPosition: startPosition,
         direction: neighborVector,
         word: "",
-        wordToMatch: word,
         width: map.length,
         height: map[0].length,
       });
@@ -41,11 +39,7 @@ export const part1 = (input: string[]): number => {
   return correctWords;
 };
 export const part2 = (input: string[]): number => {
-  const map = input.map((line) => {
-    return [...line].map((char) => {
-      return char;
-    });
-  });
+  const map = getCharMap(input);
 
   const startPositions = map.slice(1, -1).reduce((acc, line, lineIndex) => {
     return acc.concat(
@@ -60,84 +54,22 @@ export const part2 = (input: string[]): number => {
     const leftBottomCorner = map[startPosition[0] + 1][startPosition[1] - 1];
     const rightTopCorner = map[startPosition[0] - 1][startPosition[1] + 1];
     const rightBottomCorner = map[startPosition[0] + 1][startPosition[1] + 1];
-    const middle = map[startPosition[0]][startPosition[1]];
 
-    // M . S
-    // . A .
-    // M . S
-    if (
-      leftTopCorner === "M" &&
-      leftBottomCorner === leftTopCorner &&
-      rightTopCorner === "S" &&
-      rightBottomCorner === rightTopCorner
-    )
-      return acc + 1;
+    const words = [
+      leftTopCorner.concat("A").concat(rightBottomCorner),
+      leftBottomCorner.concat("A").concat(rightTopCorner),
+      rightTopCorner.concat("A").concat(leftBottomCorner),
+      rightBottomCorner.concat("A").concat(leftTopCorner),
+    ];
 
-    // S . M
-    // . A .
-    // S . M
-    if (
-      leftTopCorner === "S" &&
-      leftBottomCorner === leftTopCorner &&
-      rightTopCorner === "M" &&
-      rightBottomCorner === rightTopCorner
-    )
-      return acc + 1;
+    const correctNumber = words.filter(
+      (word) => word === WORD_TO_SEARCH.slice(1)
+    ).length;
 
-    // S . S
-    // . A .
-    // M . M
-    if (
-      leftTopCorner === "S" &&
-      rightTopCorner === leftTopCorner &&
-      leftBottomCorner === "M" &&
-      rightBottomCorner === leftBottomCorner
-    )
-      return acc + 1;
-
-    // M . M
-    // . A .
-    // S . S
-    if (
-      leftTopCorner === "M" &&
-      rightTopCorner === leftTopCorner &&
-      leftBottomCorner === "S" &&
-      rightBottomCorner === leftBottomCorner
-    )
-      return acc + 1;
-
-    return acc;
+    return correctNumber === 2 ? acc + 1 : acc;
   }, 0);
 
   return correctWords;
-};
-
-const getNeighborVectors = ({
-  position,
-  width,
-  height,
-}: {
-  position: Position;
-  width: number;
-  height: number;
-}) => {
-  return [
-    [-1, -1],
-    [-1, 0],
-    [-1, 1],
-    [0, -1],
-    [0, 1],
-    [1, -1],
-    [1, 0],
-    [1, 1],
-  ].flatMap(([rowOffset, columnOffset]) => {
-    if (position[0] + rowOffset < 0) return [];
-    if (position[0] + rowOffset >= width) return [];
-    if (position[1] + columnOffset < 0) return [];
-    if (position[1] + columnOffset >= height) return [];
-
-    return [[rowOffset, columnOffset] as Position];
-  });
 };
 
 const checkPosition = ({
@@ -145,7 +77,6 @@ const checkPosition = ({
   currentPosition,
   direction,
   word,
-  wordToMatch,
   width,
   height,
 }: {
@@ -153,14 +84,13 @@ const checkPosition = ({
   currentPosition: Position;
   direction: Position;
   word: string;
-  wordToMatch: string;
   width: number;
   height: number;
 }) => {
   const [row, column] = currentPosition;
   const [rowDirection, columnDirection] = direction;
   const nextIndex = word.length;
-  const expectedNextChar = wordToMatch.at(nextIndex);
+  const expectedNextChar = WORD_TO_SEARCH.at(nextIndex);
 
   if (row < 0 || row >= height) return false;
   if (column < 0 || column >= width) return false;
@@ -168,14 +98,13 @@ const checkPosition = ({
   const currentChar = map[row][column];
 
   if (currentChar !== expectedNextChar) return false;
-  if (word.length === wordToMatch.length - 1) return true;
+  if (word.length === WORD_TO_SEARCH.length - 1) return true;
 
   return checkPosition({
     map,
     currentPosition: [row + rowDirection, column + columnDirection],
     direction,
     word: word + currentChar,
-    wordToMatch,
     width,
     height,
   });

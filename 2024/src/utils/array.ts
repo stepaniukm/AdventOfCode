@@ -19,3 +19,11 @@ export const getDifferences = (numbers: Array<number>) =>
   slidingWindows(numbers, 2).map(([a, b]) => {
     return b - a;
   });
+
+export const getCharMap = (lines: string[]) => {
+  return lines.map((line) => {
+    return [...line].map((char) => {
+      return char;
+    });
+  });
+};
