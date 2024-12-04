@@ -6,8 +6,15 @@ type AoC = {
   baseUrl: string;
   part1: (lines: string[]) => number;
   part2: (lines: string[]) => number;
+  onlySimple?: boolean;
 };
-export const aoc = async ({ day, baseUrl, part1, part2 }: AoC) => {
+export const aoc = async ({
+  day,
+  baseUrl,
+  part1,
+  part2,
+  onlySimple = false,
+}: AoC) => {
   const simplePath = join(baseUrl, "src", `day${day}`, "simple-input.txt");
   const inputPath = join(baseUrl, "src", `day${day}`, "input.txt");
 
@@ -16,8 +23,8 @@ export const aoc = async ({ day, baseUrl, part1, part2 }: AoC) => {
 
   const part1ResultSimple = part1(simpleLines);
   const part2ResultSimple = part2(simpleLines);
-  const part1Result = part1(inputLines);
-  const part2Result = part2(inputLines);
+  const part1Result = onlySimple ? "skipped" : part1(inputLines);
+  const part2Result = onlySimple ? "skipped" : part2(inputLines);
 
   return {
     part1ResultSimple,
