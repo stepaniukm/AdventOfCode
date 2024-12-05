@@ -1,10 +1,16 @@
+import { parseTwoPartsSeparatedBySpace } from "#utils/input.ts";
+
 type Rule = {
   before: number;
   after: number;
 };
 
 export const part1 = (input: string[]): number => {
-  const { rules, rows } = parseInput(input);
+  const { partA: rules, partB: rows } = parseTwoPartsSeparatedBySpace({
+    input,
+    partAParser,
+    partBParser,
+  });
 
   const correctRows = rows.filter((row) => isRowCorrect(row, rules));
 
@@ -13,7 +19,11 @@ export const part1 = (input: string[]): number => {
   }, 0);
 };
 export const part2 = (input: string[]): number => {
-  const { rows, rules } = parseInput(input);
+  const { partA: rules, partB: rows } = parseTwoPartsSeparatedBySpace({
+    input,
+    partAParser,
+    partBParser,
+  });
 
   const correctRows = rows.filter((row) => !isRowCorrect(row, rules));
 
@@ -27,35 +37,16 @@ export const part2 = (input: string[]): number => {
   }, 0);
 };
 
-const parseInput = (input: string[]) => {
-  const { rules, rows } = input.reduce(
-    (acc, curr) => {
-      if (curr.length === 0) {
-        acc.pauseEncountered = true;
-        return acc;
-      }
-      if (acc.pauseEncountered) {
-        const line = curr.split(",").map((char) => Number(char));
-        acc.rows.push(line);
-      }
-      if (!acc.pauseEncountered) {
-        const [before, after] = curr.split("|");
-        acc.rules.push({
-          before: Number(before),
-          after: Number(after),
-        });
-      }
-      return acc;
-    },
-    {
-      rules: [] as Rule[],
-      rows: [] as Array<Array<number>>,
-      pauseEncountered: false,
-    }
-  );
+const partAParser = (line: string) => {
+  const [before, after] = line.split("|");
 
-  return { rules, rows } as const;
+  return {
+    before: Number(before),
+    after: Number(after),
+  };
 };
+const partBParser = (line: string) =>
+  line.split(",").map((char) => Number(char));
 
 const isRowCorrect = (row: number[], rules: Rule[]) => {
   return rules.every((rule) => {
