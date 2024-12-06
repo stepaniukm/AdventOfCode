@@ -1,4 +1,5 @@
 import { slidingWindows } from "@std/collections";
+import { Position } from "#utils/misc.ts";
 
 export const countOccurrences = <T extends PropertyKey>(
   array: Array<T>
@@ -26,4 +27,22 @@ export const getCharMap = (lines: string[]) => {
       return char;
     });
   });
+};
+
+export const getStartingPositions = (map: string[][], startingChar: string) => {
+  const positions = map.flatMap((currentRow, rowIndex) => {
+    const charIndex = currentRow.indexOf(startingChar);
+
+    if (charIndex !== -1) {
+      return [[rowIndex, charIndex] as Position];
+    }
+
+    return [];
+  });
+
+  if (!positions.length) {
+    throw new Error("Start position not found");
+  }
+
+  return positions as [Position, ...Position[]];
 };

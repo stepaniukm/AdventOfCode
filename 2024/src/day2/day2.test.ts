@@ -1,7 +1,7 @@
 import { part1, part2 } from "./day2.ts";
 import { assertEquals } from "@std/assert";
 import { join } from "@std/path";
-import { getLines } from "#utils/string.ts";
+import { getLines } from "#utils/input.ts";
 import { describe, it } from "@std/testing/bdd";
 
 describe("Day2", () => {

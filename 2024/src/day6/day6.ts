@@ -1,48 +1,37 @@
-import { getCharMap } from "#utils/array.ts";
+import { List } from "immutable";
+import { getCharMap, getStartingPositions } from "#utils/array.ts";
 import { Direction, Position, rotate90DegreesRight, up } from "#utils/misc.ts";
+import {
+  availableParallelism,
+  FixedThreadPool,
+} from "@poolifier/poolifier-web-worker";
 
+import { MyData, MyResponse } from "./checkCycle.worker.ts";
+
+const workerFileURL = new URL("./checkCycle.worker.ts", import.meta.url);
+const fixedPool = new FixedThreadPool<MyData, MyResponse>(
+  availableParallelism(),
+  workerFileURL,
+  {
+    errorEventHandler: (e: ErrorEvent) => {
+      console.error(e);
+    },
+  }
+);
 export const part1 = (input: string[]): number => {
   const map = getCharMap(input);
-  const startPosition = map.reduce((acc, currentRow, rowIndex) => {
-    if (acc) {
-      return acc;
-    }
-
-    const charIndex = currentRow.indexOf("^");
-
-    if (charIndex !== -1) {
-      return [rowIndex, charIndex] as Position;
-    }
-
-    return null;
-  }, null as Position | null);
-  if (!startPosition) {
-    throw new Error("Start position not found");
-  }
+  const allStartPositions = getStartingPositions(map, "^");
+  const startPosition = allStartPositions[0];
 
   const distinctPositions = getDistinctGuardPosition(map, startPosition);
 
   return distinctPositions.size;
 };
-export const part2 = (input: string[]): number => {
+export const part2 = async (input: string[]): Promise<number> => {
   const map = getCharMap(input);
-  const startPosition = map.reduce((acc, currentRow, rowIndex) => {
-    if (acc) {
-      return acc;
-    }
-
-    const charIndex = currentRow.indexOf("^");
-
-    if (charIndex !== -1) {
-      return [rowIndex, charIndex] as Position;
-    }
-
-    return null;
-  }, null as Position | null);
-
-  if (!startPosition) {
-    throw new Error("Start position not found");
-  }
+  const listMap = List(map.map((row) => List(row)));
+  const allStartPositions = getStartingPositions(map, "^");
+  const startPosition = allStartPositions[0];
 
   const distinctPositions = getDistinctGuardPosition(map, startPosition);
   distinctPositions.delete(startPosition.join(","));
@@ -50,12 +39,26 @@ export const part2 = (input: string[]): number => {
     return position.split(",").map(Number) as Position;
   });
 
-  return actualDistinctPositions.filter((position) => {
-    const newMap = structuredClone(map);
-    newMap[position[0]][position[1]] = "#";
+  const results = await Promise.all(
+    actualDistinctPositions.map((position) => {
+      const newMap = listMap
+        .withMutations((mutableMap) => {
+          mutableMap.set(
+            position[0],
+            mutableMap.get(position[0])!.set(position[1], "#")
+          );
+        })
+        .toJS();
 
-    return checkCycle(newMap, startPosition);
-  }).length;
+      return fixedPool.execute({ map: newMap, startPosition });
+    })
+  );
+
+  const result = results
+    .map((result) => result.hasCycle)
+    .filter(Boolean).length;
+
+  return result;
 };
 
 export const getDistinctGuardPosition = (
@@ -101,57 +104,4 @@ export const getDistinctGuardPosition = (
   }
 
   return distinctPositions;
-};
-
-export const checkCycle = (
-  map: string[][],
-  startPosition: Position
-): boolean => {
-  const distinctPositions = new Set<string>();
-  let direction = up as Direction;
-  distinctPositions.add(startPosition.join(",") + ":" + direction.join(","));
-
-  let currentPosition = startPosition;
-
-  while (
-    currentPosition[0] < map.length &&
-    currentPosition[0] >= 0 &&
-    currentPosition[1] < map[0].length &&
-    currentPosition[1] >= 0
-  ) {
-    const newPosition = [
-      currentPosition[0] + direction[0],
-      currentPosition[1] + direction[1],
-    ] as Position;
-
-    const newPositionString = newPosition.join(",") + ":" + direction.join(",");
-
-    if (distinctPositions.has(newPositionString)) {
-      return true;
-    }
-
-    if (
-      newPosition[0] < 0 ||
-      newPosition[0] >= map.length ||
-      newPosition[1] < 0 ||
-      newPosition[1] >= map[0].length
-    ) {
-      break;
-    }
-
-    const char = map[newPosition[0]][newPosition[1]];
-
-    if (char === "#") {
-      direction = rotate90DegreesRight(direction);
-      distinctPositions.add(
-        currentPosition.join(",") + ":" + direction.join(",")
-      );
-      continue;
-    }
-
-    distinctPositions.add(newPosition.join(",") + ":" + direction.join(","));
-    currentPosition = newPosition;
-  }
-
-  return false;
 };

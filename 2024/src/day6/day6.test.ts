@@ -1,7 +1,7 @@
 import { part1, part2 } from "./day6.ts";
 import { assertEquals } from "@std/assert";
 import { join } from "@std/path";
-import { getLines } from "#utils/string.ts";
+import { getLines } from "#utils/input.ts";
 import { describe, it } from "@std/testing/bdd";
 
 describe("Day6", () => {
@@ -29,7 +29,7 @@ describe("Day6", () => {
     const inputText = await Deno.readTextFile(simplePath);
     const lines = getLines(inputText);
 
-    const result = part2(lines);
+    const result = await part2(lines);
 
     assertEquals(result, 6);
   });
@@ -38,7 +38,7 @@ describe("Day6", () => {
     const inputText = await Deno.readTextFile(simplePath);
     const lines = getLines(inputText);
 
-    const result = part2(lines);
+    const result = await part2(lines);
 
     assertEquals(result, 1957);
   });

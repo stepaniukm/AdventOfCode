@@ -2,7 +2,7 @@ import { part1, part2 } from "./day1.ts";
 import { describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
 import { join } from "@std/path";
-import { getLines } from "#utils/string.ts";
+import { getLines } from "#utils/input.ts";
 
 describe("Day1", () => {
   it("should work for part 1 with simple input", async () => {

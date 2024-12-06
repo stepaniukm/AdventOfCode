@@ -4,8 +4,8 @@ import { join } from "@std/path";
 type AoC = {
   day: string;
   baseUrl: string;
-  part1: (lines: string[]) => number;
-  part2: (lines: string[]) => number;
+  part1: (lines: string[]) => number | Promise<number>;
+  part2: (lines: string[]) => number | Promise<number>;
   onlySimple?: boolean;
 };
 export const aoc = async ({
@@ -21,10 +21,10 @@ export const aoc = async ({
   const simpleLines = await readLines(simplePath);
   const inputLines = await readLines(inputPath);
 
-  const part1ResultSimple = part1(simpleLines);
-  const part2ResultSimple = part2(simpleLines);
-  const part1Result = onlySimple ? "skipped" : part1(inputLines);
-  const part2Result = onlySimple ? "skipped" : part2(inputLines);
+  const part1ResultSimple = await part1(simpleLines);
+  const part2ResultSimple = await part2(simpleLines);
+  const part1Result = onlySimple ? "skipped" : await part1(inputLines);
+  const part2Result = onlySimple ? "skipped" : await part2(inputLines);
 
   return {
     part1ResultSimple,

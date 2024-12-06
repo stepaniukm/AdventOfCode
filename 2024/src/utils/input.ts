@@ -34,3 +34,5 @@ export const parseTwoPartsSeparatedBySpace = <PA, PB>({
 
   return { partA, partB } as const;
 };
+
+export const getLines = (str: string) => str.split("\n");

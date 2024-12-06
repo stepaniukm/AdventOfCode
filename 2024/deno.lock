@@ -1,6 +1,7 @@
 {
   "version": "4",
   "specifiers": {
+    "jsr:@poolifier/poolifier-web-worker@~0.4.31": "0.4.31",
     "jsr:@std/assert@1": "1.0.8",
     "jsr:@std/assert@^1.0.8": "1.0.8",
     "jsr:@std/collections@^1.0.9": "1.0.9",
@@ -9,9 +10,13 @@
     "jsr:@std/internal@^1.0.5": "1.0.5",
     "jsr:@std/path@^1.0.8": "1.0.8",
     "jsr:@std/testing@^1.0.5": "1.0.5",
+    "npm:@types/node@*": "22.5.4",
     "npm:immutable@5.0.3": "5.0.3"
   },
   "jsr": {
+    "@poolifier/poolifier-web-worker@0.4.31": {
+      "integrity": "651c799948657f3f777cc554a4301daa8c8d0745fe1d4b210ecaf7f0cc13e94e"
+    },
     "@std/assert@1.0.8": {
       "integrity": "ebe0bd7eb488ee39686f77003992f389a06c3da1bbd8022184804852b2fa641b",
       "dependencies": [
@@ -48,12 +53,22 @@
     }
   },
   "npm": {
+    "@types/node@22.5.4": {
+      "integrity": "sha512-FDuKUJQm/ju9fT/SeX/6+gBzoPzlVCzfzmGkwKvRHQVxi4BntVbyIwf6a4Xn62mrvndLiml6z/UBXIdEVjQLXg==",
+      "dependencies": [
+        "undici-types"
+      ]
+    },
     "immutable@5.0.3": {
       "integrity": "sha512-P8IdPQHq3lA1xVeBRi5VPqUm5HDgKnx0Ru51wZz5mjxHr5n3RWhjIpOFU7ybkUxfB+5IToy+OLaHYDBIWsv+uw=="
+    },
+    "undici-types@6.19.8": {
+      "integrity": "sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw=="
     }
   },
   "workspace": {
     "dependencies": [
+      "jsr:@poolifier/poolifier-web-worker@~0.4.31",
       "jsr:@std/assert@1",
       "jsr:@std/collections@^1.0.9",
       "jsr:@std/data-structures@^1.0.4",
