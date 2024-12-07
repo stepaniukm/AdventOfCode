@@ -18,7 +18,11 @@ export const part1 = (input: string[]): number | bigint => {
 
     const correctCombinations = combinations.filter((combination) => {
       const combinationIterator = combination.values();
+
       const combinationResult = numbers.reduce((acc, number) => {
+        if (acc > result) {
+          return acc;
+        }
         const next = combinationIterator.next();
         const isAdding = next.value === 0;
 
@@ -40,8 +44,8 @@ export const part1 = (input: string[]): number | bigint => {
 export const part2 = (input: string[]): number | bigint => {
   const parsedInput = input.map((line) => {
     const [resultString, numbersString] = line.split(":");
-    const result = BigInt(resultString);
-    const numbers = numbersString.trim().split(" ").map(BigInt);
+    const result = Number(resultString);
+    const numbers = numbersString.trim().split(" ").map(Number);
 
     return {
       result,
@@ -52,15 +56,15 @@ export const part2 = (input: string[]): number | bigint => {
   return parsedInput.reduce((acc, { result, numbers }) => {
     const holes = numbers.length - 1;
     const combinations = Array.from({ length: 3 ** holes }, (_, i) =>
-      i.toString(3).padStart(holes, "0").split("").map(BigInt)
+      i.toString(3).padStart(holes, "0").split("").map(Number)
     );
 
-    const correctCombinations = combinations.filter((combination) => {
+    const correctCombinations = combinations.find((combination) => {
       const combinationIterator = combination.values();
       const combinationResult = numbers.reduce((acc, number) => {
         const next = combinationIterator.next();
-        const isAdding = next.value === 0n;
-        const isMultiplying = next.value === 1n;
+        const isAdding = next.value === 0;
+        const isMultiplying = next.value === 1;
 
         if (isAdding) {
           return acc + number;
@@ -68,16 +72,16 @@ export const part2 = (input: string[]): number | bigint => {
         if (isMultiplying) {
           return acc * number;
         }
-        return BigInt(acc.toString() + number.toString());
+        return Number(acc.toString() + number.toString());
       });
 
       return combinationResult === result;
-    }).length;
+    });
 
-    if (correctCombinations > 0) {
+    if (correctCombinations) {
       return acc + result;
     }
 
     return acc;
-  }, 0n);
+  }, 0);
 };
