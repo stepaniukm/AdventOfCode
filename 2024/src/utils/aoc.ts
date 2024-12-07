@@ -4,8 +4,8 @@ import { join } from "@std/path";
 type AoC = {
   day: string;
   baseUrl: string;
-  part1: (lines: string[]) => number | Promise<number>;
-  part2: (lines: string[]) => number | Promise<number>;
+  part1: (lines: string[]) => number | bigint | Promise<number | bigint>;
+  part2: (lines: string[]) => number | bigint | Promise<number | bigint>;
   onlySimple?: boolean;
 };
 export const aoc = async ({
