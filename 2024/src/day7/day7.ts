@@ -1,16 +1,14 @@
-export const part1 = (input: string[]): number | bigint => {
-  const parsedInput = input.map((line) => {
-    const [resultString, numbersString] = line.split(":");
-    const result = Number(resultString);
-    const numbers = numbersString.trim().split(" ").map(Number);
+import { parseLinesIntoTwoParts } from "#utils/input.ts";
 
-    return {
-      result,
-      numbers,
-    } as const;
+export const part1 = (input: string[]): number | bigint => {
+  const parsedInput = parseLinesIntoTwoParts({
+    input,
+    separateString: ": ",
+    partAParser: (line) => Number(line),
+    partBParser: (line) => line.split(" ").map(Number),
   });
 
-  return parsedInput.reduce((acc, { result, numbers }) => {
+  return parsedInput.reduce((acc, { partA: result, partB: numbers }) => {
     const holes = numbers.length - 1;
     const combinations = Array.from(
       { length: 2 ** holes },

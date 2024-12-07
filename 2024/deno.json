@@ -3,6 +3,7 @@
   "tasks": {
     "start": "deno run --allow-read --allow-env --allow-sys main.ts",
     "test": "deno test --allow-read --allow-env --allow-sys",
+    "test:simple": "TEST_SIMPLE=1 deno test --allow-read --allow-env --allow-sys",
     "bench": "deno bench --allow-read --allow-env --allow-sys"
   },
   "imports": {
