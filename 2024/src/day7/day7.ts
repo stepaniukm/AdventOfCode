@@ -12,8 +12,9 @@ export const part1 = (input: string[]): number | bigint => {
 
   return parsedInput.reduce((acc, { result, numbers }) => {
     const holes = numbers.length - 1;
-    const combinations = Array.from({ length: 2 ** holes }, (_, i) =>
-      i.toString(2).padStart(holes, "0").split("").map(Number)
+    const combinations = Array.from(
+      { length: 2 ** holes },
+      (_, i) => i.toString(2).padStart(holes, "0").split("").map(Number),
     );
 
     const correctCombinations = combinations.filter((combination) => {
@@ -55,8 +56,9 @@ export const part2 = (input: string[]): number | bigint => {
 
   return parsedInput.reduce((acc, { result, numbers }) => {
     const holes = numbers.length - 1;
-    const combinations = Array.from({ length: 3 ** holes }, (_, i) =>
-      i.toString(3).padStart(holes, "0").split("").map(Number)
+    const combinations = Array.from(
+      { length: 3 ** holes },
+      (_, i) => i.toString(3).padStart(holes, "0").split("").map(Number),
     );
 
     const correctCombinations = combinations.find((combination) => {
