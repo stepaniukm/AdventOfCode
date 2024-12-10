@@ -1,0 +1,11 @@
+6_385_338_159_127 <- stasiu na moim inpucie <- poprawny
+6_385_602_051_685 <- ja na swoim inpucie
+--------------------------------------------------
+16_172_456_175_209 <- ja na swoim inpucie <- niepoprawny 1
+15_873_792_332_283 <- ja na inpucie berda <- niepoprawny 1
+15_854_158_944_626 <- ja na inpucie berda <- niepoprawny 2
+16_195_380_088_920 <- ja na inpucie berda <- niepoprawny 3 <- regexp
+15_872_197_577_505 <- ja na inpucie berda <- niepoprawny 4
+1_246_772_155_101 <- ja na inpucie berda <- niepoprawny 5
+
+6_287_317_016_845 <- berd na inpucie berda <- poprawny
