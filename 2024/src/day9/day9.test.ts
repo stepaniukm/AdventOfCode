@@ -39,7 +39,7 @@ describe("Day9", () => {
 
     const result = part2(lines);
 
-    assertEquals(result, 2833);
+    assertEquals(result, 3156);
   });
 
   it(
@@ -51,7 +51,7 @@ describe("Day9", () => {
 
       const result = part2(lines);
 
-      assertEquals(result, 1229);
+      assertEquals(result, 6415163624282);
     },
   );
 });

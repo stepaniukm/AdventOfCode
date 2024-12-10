@@ -1,3 +1,5 @@
+import { slidingWindows } from "@std/collections";
+
 const NEUTRAL_CHAR = ".";
 
 export const part1 = (input: string[]): number | bigint => {
@@ -51,96 +53,151 @@ export const part1 = (input: string[]): number | bigint => {
   );
 };
 
+type Entry = { type: "file"; id: string; sizeInBlocks: number } | {
+  type: "space";
+  sizeInBlocks: number;
+};
+
 export const part2 = (input: string[]): number | bigint => {
   const line = input[0];
 
   let nextId = -1;
 
-  const string = line.split("").reduce((acc, curr, idx) => {
-    const currNumber = Number(curr);
+  const groups = line.split("").reduce((acc, size, idx) => {
+    const sizeNumber = Number(size);
     if (idx % 2 === 0) {
       nextId++;
       return acc.concat(
-        Array.from({ length: currNumber }, () => nextId.toString()),
+        { type: "file", id: nextId.toString(), sizeInBlocks: sizeNumber },
       );
     } else {
-      return acc.concat(NEUTRAL_CHAR.repeat(currNumber).split(""));
+      return acc.concat({
+        type: "space",
+        sizeInBlocks: sizeNumber,
+      });
     }
-  }, [] as string[]);
+  }, [] as Entry[]);
 
-  let compressedString = string;
-  let matchIndex: number = -1;
+  let compressedGroups = groups;
+  let fileToMoveIndex: number = -1;
+  let spaceToMoveIndex: number = -1;
 
   do {
-    const nextIdString = nextId.toString();
-    const nextIdLength = nextIdString.length;
-
-    const currentGroupIndex = compressedString.indexOf(nextIdString);
-    const currentGroupIndexEnd = compressedString.lastIndexOf(
-      nextIdString,
+    fileToMoveIndex = compressedGroups.findLastIndex((group) =>
+      group.type === "file" && Number(group.id) <= nextId
     );
-    const currentGroup = compressedString.slice(
-      currentGroupIndex,
-      currentGroupIndex +
-        (currentGroupIndexEnd - currentGroupIndex + 1) * nextIdLength,
-    );
-    const currentGroupLength = currentGroup.length;
 
-    ////////////////////////// Above is 100% correct //////////////////////////
+    if (fileToMoveIndex === -1) {
+      nextId--;
+      continue;
+    }
+    const fileToMove = compressedGroups[fileToMoveIndex];
 
-    matchIndex = 0;
-    let found = false;
+    spaceToMoveIndex = compressedGroups.findIndex((group) => {
+      return group.type === "space" &&
+        group.sizeInBlocks >= fileToMove.sizeInBlocks;
+    });
 
-    while (matchIndex < currentGroupIndex - 3) {
-      const currentChar = compressedString[matchIndex];
-
-      if (currentChar !== NEUTRAL_CHAR) {
-        matchIndex++;
-        continue;
-      } else {
-        const items = compressedString.slice(
-          matchIndex,
-          matchIndex + currentGroupLength,
-        );
-
-        if (
-          items.every((item) => item === NEUTRAL_CHAR)
-        ) {
-          found = true;
-          break;
-        } else {
-          matchIndex++;
-        }
-      }
+    if (spaceToMoveIndex === -1) {
+      nextId--;
+      continue;
     }
 
-    // console.log({
-    //   matchIndex,
-    //   currentGroup,
-    //   compressedString: compressedString.join(""),
-    // });
+    const spaceToMove = compressedGroups[spaceToMoveIndex];
 
-    if (
-      matchIndex !== -1 && matchIndex < currentGroupIndex && nextId > 0 && found
-    ) {
-      const newCompressedString = compressedString.slice(0, matchIndex)
-        .concat(currentGroup)
-        .concat(compressedString.slice(
-          matchIndex + currentGroupLength,
-          currentGroupIndex,
-        ))
-        .concat(...NEUTRAL_CHAR.repeat(currentGroupLength))
-        .concat(compressedString.slice(currentGroupIndexEnd + 1));
+    const spaceLeft = spaceToMove.sizeInBlocks -
+      fileToMove.sizeInBlocks;
 
-      compressedString = newCompressedString;
+    const leftSpaceEntry = spaceLeft > 0
+      ? {
+        type: "space",
+        sizeInBlocks: spaceLeft,
+      } as Entry
+      : null;
+
+    if (spaceToMoveIndex < fileToMoveIndex) {
+      const newCompressedGroupsWithFile = compressedGroups.slice(
+        0,
+        spaceToMoveIndex,
+      )
+        .concat(fileToMove);
+      const newCompressedGroupsWithNewLeftSpace = leftSpaceEntry
+        ? newCompressedGroupsWithFile.concat(
+          leftSpaceEntry,
+        )
+        : newCompressedGroupsWithFile;
+
+      const newCompressedGroupsToNormalize = newCompressedGroupsWithNewLeftSpace
+        .concat(
+          compressedGroups.slice(
+            spaceToMoveIndex + 1,
+            fileToMoveIndex,
+          ),
+        )
+        .concat({ type: "space", sizeInBlocks: fileToMove.sizeInBlocks })
+        .concat(compressedGroups.slice(fileToMoveIndex + 1));
+
+      const normalizedCompressedGroups = normalizeGroups(
+        newCompressedGroupsToNormalize,
+      );
+
+      compressedGroups = normalizedCompressedGroups;
     }
     nextId--;
-  } while ((matchIndex !== -1 && nextId > 0) || nextId > 0);
-
-  return compressedString.reduce(
-    (acc, curr, idx) => {
-      return acc + Number(curr === NEUTRAL_CHAR ? 0 : curr) * idx;
-    },
-    0,
+  } while (
+    (spaceToMoveIndex !== -1 && fileToMoveIndex !== -1 && nextId > 0) ||
+    nextId > 0
   );
+
+  return compressedGroups.reduce(
+    (acc, curr) => {
+      if (curr.type === "space") {
+        acc.globalIndex += curr.sizeInBlocks;
+        return acc;
+      }
+
+      const indexes = Array.from(
+        { length: curr.sizeInBlocks },
+        (_, i) => i + acc.globalIndex,
+      );
+
+      const sum = indexes.reduce((a, b) => a + b * Number(curr.id), 0);
+
+      acc.sum += sum;
+      acc.globalIndex += curr.sizeInBlocks;
+
+      return acc;
+    },
+    { globalIndex: 0, sum: 0 },
+  ).sum;
+};
+
+const normalizeGroups = (groups: Entry[]) => {
+  let newGroups = groups;
+  let slidingWindowsForGroups = slidingWindows(newGroups, 2);
+
+  while (
+    slidingWindowsForGroups.some((group) =>
+      group.every((groupItem) => groupItem.type === "space")
+    )
+  ) {
+    const spaceGroupIndex = slidingWindowsForGroups.findIndex((group) =>
+      group.every((groupItem) => groupItem.type === "space")
+    );
+    const spaceGroup = slidingWindowsForGroups[spaceGroupIndex];
+    const spaceGroupSize = spaceGroup.reduce(
+      (acc, curr) => acc + curr.sizeInBlocks,
+      0,
+    );
+
+    const newGroupsToUpdate = newGroups.slice(0, spaceGroupIndex).concat({
+      type: "space",
+      sizeInBlocks: spaceGroupSize,
+    });
+
+    newGroups = newGroupsToUpdate.concat(newGroups.slice(spaceGroupIndex + 2));
+    slidingWindowsForGroups = slidingWindows(newGroups, 2);
+  }
+
+  return newGroups;
 };
