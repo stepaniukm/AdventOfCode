@@ -31,13 +31,17 @@ export const getCharMap = (lines: string[]) => {
 
 export const getStartingPositions = (map: string[][], startingChar: string) => {
   const positions = map.flatMap((currentRow, rowIndex) => {
-    const charIndex = currentRow.indexOf(startingChar);
+    const columnIndexes = currentRow.flatMap((char, columnIndex) => {
+      if (char === startingChar) {
+        return [columnIndex];
+      } else {
+        return [];
+      }
+    });
 
-    if (charIndex !== -1) {
-      return [[rowIndex, charIndex] as Position];
-    }
-
-    return [];
+    return columnIndexes.map((columnIndex) => {
+      return [rowIndex, columnIndex] as Position;
+    });
   });
 
   if (!positions.length) {
