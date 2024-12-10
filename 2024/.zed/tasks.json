@@ -1,0 +1,12 @@
+// Static tasks configuration.
+//
+// Example:
+[
+  {
+    "label": "Run deno test",
+    "command": "deno test --allow-read --allow-env --allow-sys $ZED_FILE",
+    "use_new_terminal": true,
+    "reveal": "always",
+    "hide": "never"
+  }
+]

@@ -1,9 +1,16 @@
-import { part1, part2 } from "./src/day10/day10.ts";
+import { part1, part2 } from "./src/day9/day9.ts";
 import { aoc } from "#utils/aoc.ts";
 
-const day = "10";
+const day = "9";
 const baseUrl = import.meta.dirname!;
 
-const result = await aoc({ day, baseUrl, part1, part2, onlySimple: false });
+const result = await aoc({
+  day,
+  baseUrl,
+  part1,
+  part2,
+  onlySimple: false,
+  onlyPart1: false,
+});
 
 console.log(result);
