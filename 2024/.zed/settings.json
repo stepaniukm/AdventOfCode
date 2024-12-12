@@ -6,6 +6,13 @@
           "enable": true
         }
       }
+    },
+    "eslint": {
+      "settings": {
+        "eslint": {
+          "enable": false
+        }
+      }
     }
   },
   "languages": {
