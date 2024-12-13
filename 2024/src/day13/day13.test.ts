@@ -3,6 +3,7 @@ import { assertEquals } from "@std/assert";
 import { join } from "@std/path";
 import { getLines } from "#utils/input.ts";
 import { describe, it } from "@std/testing/bdd";
+import { assertEqualToBigIntOrNumber } from "#utils/test.ts";
 
 const onlySimple = (Deno.env.get("TEST_SIMPLE") ?? "0") === "1";
 
@@ -14,7 +15,7 @@ describe("Day13", () => {
 
     const result = part1(lines);
 
-    assertEquals(result, 1930);
+    assertEqualToBigIntOrNumber(result, "480");
   });
 
   it(
@@ -26,7 +27,7 @@ describe("Day13", () => {
 
       const result = part1(lines);
 
-      assertEquals(result, 1461806);
+      assertEqualToBigIntOrNumber(result, "27157");
     },
   );
 
@@ -37,7 +38,7 @@ describe("Day13", () => {
 
     const result = part2(lines);
 
-    assertEquals(result, 1206);
+    assertEqualToBigIntOrNumber(result, "875318608908");
   });
 
   it(
@@ -49,7 +50,7 @@ describe("Day13", () => {
 
       const result = part2(lines);
 
-      assertEquals(result, 887932);
+      assertEqualToBigIntOrNumber(result, "104015411578548");
     },
   );
 });
