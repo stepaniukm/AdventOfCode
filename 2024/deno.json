@@ -14,7 +14,8 @@
     "@std/path": "jsr:@std/path@^1.0.8",
     "@std/testing": "jsr:@std/testing@^1.0.5",
     "immutable": "npm:immutable@5.0.3",
-    "#utils/": "./src/utils/"
+    "#utils/": "./src/utils/",
+    "mathjs": "npm:mathjs@^14.0.1"
   },
   "compilerOptions": {
     "lib": ["deno.ns", "ESNext", "dom"],

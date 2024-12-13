@@ -85,3 +85,7 @@ export const rotate90DegreesRight = (direction: Direction): Direction => {
 
   throw new Error("Invalid direction");
 };
+
+export const positionToString = (position: Position) => {
+  return position.join(",");
+};
