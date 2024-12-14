@@ -11,8 +11,7 @@
     "jsr:@std/path@^1.0.8": "1.0.8",
     "jsr:@std/testing@^1.0.5": "1.0.5",
     "npm:@types/node@*": "22.5.4",
-    "npm:immutable@5.0.3": "5.0.3",
-    "npm:mathjs@^14.0.1": "14.0.1"
+    "npm:immutable@5.0.3": "5.0.3"
   },
   "jsr": {
     "@poolifier/poolifier-web-worker@0.4.31": {
@@ -54,61 +53,14 @@
     }
   },
   "npm": {
-    "@babel/runtime@7.26.0": {
-      "integrity": "sha512-FDSOghenHTiToteC/QRlv2q3DhPZ/oOXTBoirfWNx1Cx3TMVcGWQtMMmQcSvb/JjpNeGzx8Pq/b4fKEJuWm1sw==",
-      "dependencies": [
-        "regenerator-runtime"
-      ]
-    },
     "@types/node@22.5.4": {
       "integrity": "sha512-FDuKUJQm/ju9fT/SeX/6+gBzoPzlVCzfzmGkwKvRHQVxi4BntVbyIwf6a4Xn62mrvndLiml6z/UBXIdEVjQLXg==",
       "dependencies": [
         "undici-types"
       ]
     },
-    "complex.js@2.4.2": {
-      "integrity": "sha512-qtx7HRhPGSCBtGiST4/WGHuW+zeaND/6Ld+db6PbrulIB1i2Ev/2UPiqcmpQNPSyfBKraC0EOvOKCB5dGZKt3g=="
-    },
-    "decimal.js@10.4.3": {
-      "integrity": "sha512-VBBaLc1MgL5XpzgIP7ny5Z6Nx3UrRkIViUkPUdtl9aya5amy3De1gsUUSB1g3+3sExYNjCAsAznmukyxCb1GRA=="
-    },
-    "escape-latex@1.2.0": {
-      "integrity": "sha512-nV5aVWW1K0wEiUIEdZ4erkGGH8mDxGyxSeqPzRNtWP7ataw+/olFObw7hujFWlVjNsaDFw5VZ5NzVSIqRgfTiw=="
-    },
-    "fraction.js@5.2.1": {
-      "integrity": "sha512-Ah6t/7YCYjrPUFUFsOsRLMXAdnYM+aQwmojD2Ayb/Ezr82SwES0vuyQ8qZ3QO8n9j7W14VJuVZZet8U3bhSdQQ=="
-    },
     "immutable@5.0.3": {
       "integrity": "sha512-P8IdPQHq3lA1xVeBRi5VPqUm5HDgKnx0Ru51wZz5mjxHr5n3RWhjIpOFU7ybkUxfB+5IToy+OLaHYDBIWsv+uw=="
-    },
-    "javascript-natural-sort@0.7.1": {
-      "integrity": "sha512-nO6jcEfZWQXDhOiBtG2KvKyEptz7RVbpGP4vTD2hLBdmNQSsCiicO2Ioinv6UI4y9ukqnBpy+XZ9H6uLNgJTlw=="
-    },
-    "mathjs@14.0.1": {
-      "integrity": "sha512-yyJgLwC6UXuve724np8tHRMYaTtb5UqiOGQkjwbSXgH8y1C/LcJ0pvdNDZLI2LT7r+iExh2Y5HwfAY+oZFtGIQ==",
-      "dependencies": [
-        "@babel/runtime",
-        "complex.js",
-        "decimal.js",
-        "escape-latex",
-        "fraction.js",
-        "javascript-natural-sort",
-        "seedrandom",
-        "tiny-emitter",
-        "typed-function"
-      ]
-    },
-    "regenerator-runtime@0.14.1": {
-      "integrity": "sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw=="
-    },
-    "seedrandom@3.0.5": {
-      "integrity": "sha512-8OwmbklUNzwezjGInmZ+2clQmExQPvomqjL7LFqOYqtmuxRgQYqOD3mHaU+MvZn5FLUeVxVfQjwLZW/n/JFuqg=="
-    },
-    "tiny-emitter@2.1.0": {
-      "integrity": "sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q=="
-    },
-    "typed-function@4.2.1": {
-      "integrity": "sha512-EGjWssW7Tsk4DGfE+5yluuljS1OGYWiI1J6e8puZz9nTMM51Oug8CD5Zo4gWMsOhq5BI+1bF+rWTm4Vbj3ivRA=="
     },
     "undici-types@6.19.8": {
       "integrity": "sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw=="
@@ -122,8 +74,7 @@
       "jsr:@std/data-structures@^1.0.4",
       "jsr:@std/path@^1.0.8",
       "jsr:@std/testing@^1.0.5",
-      "npm:immutable@5.0.3",
-      "npm:mathjs@^14.0.1"
+      "npm:immutable@5.0.3"
     ]
   }
 }
