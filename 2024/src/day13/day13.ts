@@ -1,5 +1,3 @@
-import * as math from "mathjs";
-
 type Section = {
   A: [bigint, bigint];
   B: [bigint, bigint];
