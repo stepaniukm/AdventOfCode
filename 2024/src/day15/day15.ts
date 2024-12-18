@@ -220,10 +220,6 @@ const getBoxesToMovePart2 = (
     robot[1] + moveOffset[1],
   ]];
 
-  const isUp = moveOffset[0] < 0;
-  const isDown = moveOffset[0] > 0;
-  const isUpOrDown = isUp || isDown;
-
   let nextPositionChars = nextPositionsToCheck.map((nextPositionToCheck) =>
     map[nextPositionToCheck[0]][nextPositionToCheck[1]]
   );

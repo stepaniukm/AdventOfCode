@@ -50,7 +50,7 @@ describe("Day18", () => {
       const inputText = await Deno.readTextFile(simplePath);
       const lines = getLines(inputText);
 
-      Deno.env.set("IS_SIMPLE", "10");
+      Deno.env.set("IS_SIMPLE", "0");
       const result = part2(lines);
 
       assertEqualToBigIntOrNumber(result, "30,12");
