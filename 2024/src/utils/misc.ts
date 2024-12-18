@@ -3,6 +3,10 @@ export const identity = <T>(anything: T) => anything;
 export type Position = [row: number, column: number];
 export type Direction = [rowOffset: number, columnOffset: number];
 
+export const addPositions = (position1: Position, position2: Position) => {
+  return [position1[0] + position2[0], position1[1] + position2[1]] as Position;
+};
+
 export const getNeighborVectors = ({
   position,
   width,
