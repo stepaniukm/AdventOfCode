@@ -7,38 +7,37 @@ pub fn part1(input: List(String)) -> Int {
   let value =
     list.fold(input, #(50, 0), fn(acc, line) {
       let #(val, times) = acc
+      let amount =
+        string.slice(line, 1, string.length(line))
+        |> int.parse()
+        |> result.unwrap(0)
 
-      let dir = string.first(line) |> result.unwrap("")
+      string.first(line)
+      |> result.map(fn(first_letter) {
+        case first_letter {
+          "L" -> {
+            let n = val - amount % 100
 
-      let new_val = case dir {
-        "L" -> {
-          let amount =
-            string.slice(line, 1, string.length(line))
-            |> int.parse()
-            |> result.unwrap(0)
-          let n = val - amount % 100
-
-          case n < 0 {
-            True -> 100 + n
-            False -> n
+            case n < 0 {
+              True -> 100 + n
+              False -> n
+            }
           }
-        }
-        "R" -> {
-          let amount =
-            string.slice(line, 1, string.length(line))
-            |> int.parse()
-            |> result.unwrap(0)
-          let n = val + amount % 100
+          "R" -> {
+            let n = val + amount % 100
 
-          n % 100
+            n % 100
+          }
+          _ -> val
         }
-        _ -> val
-      }
-
-      case new_val == 0 {
-        True -> #(new_val, times + 1)
-        False -> #(new_val, times)
-      }
+      })
+      |> result.map(fn(new_val) {
+        case new_val == 0 {
+          True -> #(new_val, times + 1)
+          False -> #(new_val, times)
+        }
+      })
+      |> result.unwrap(#(val, times))
     })
 
   value.1
