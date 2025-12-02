@@ -1,27 +1,21 @@
 import gleam/int
-import gleam/io
 import gleam/list
 import gleam/result
 import gleam/string
 
 pub fn part1(input: List(String)) -> Int {
-  let l =
-    list.first(input)
-    |> result.unwrap("")
-    |> string.split(",")
-    |> list.flat_map(fn(r) {
-      let bounds =
-        string.split(r, "-")
-        |> list.map(fn(b) { int.parse(b) |> result.unwrap(0) })
-      case bounds {
-        [start, end] -> list.range(start, end)
-        _ -> []
-      }
-    })
-
-  io.println("Generated list of length: " <> int.to_string(list.length(l)))
-
-  l
+  list.first(input)
+  |> result.unwrap("")
+  |> string.split(",")
+  |> list.flat_map(fn(r) {
+    let bounds =
+      string.split(r, "-")
+      |> list.map(fn(b) { int.parse(b) |> result.unwrap(0) })
+    case bounds {
+      [start, end] -> list.range(start, end)
+      _ -> []
+    }
+  })
   |> list.fold(0, fn(acc, num) {
     let num_string = int.to_string(num)
 
