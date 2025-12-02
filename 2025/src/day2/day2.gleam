@@ -1,3 +1,4 @@
+import gleam/bool
 import gleam/int
 import gleam/list
 import gleam/result
@@ -18,6 +19,7 @@ pub fn part1(input: List(String)) -> Int {
   })
   |> list.fold(0, fn(acc, num) {
     let num_string = int.to_string(num)
+    use <- bool.guard(when: string.length(num_string) % 2 != 0, return: acc)
 
     let half = string.length(num_string) / 2
     let window_ranges = list.range(1, half)
