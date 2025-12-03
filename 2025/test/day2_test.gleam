@@ -17,12 +17,14 @@ pub fn day2_part1_actual_test() {
 
 pub fn day2_part2_simple_test() {
   let input = helpers.read_lines_from_file("./src/day2/simple-input.txt")
+  let result = day2.part2(input)
 
-  assert day2.part2(input) == 4_174_379_265
+  assert result == 4_174_379_265
 }
 
 pub fn day2_part2_actual_test() {
-  let input = helpers.read_lines_from_file("./src/day1/input.txt")
+  let input = helpers.read_lines_from_file("./src/day2/input.txt")
+  let result = day2.part2(input)
 
-  assert day2.part2(input) == 45_814_076_230
+  assert result == 45_814_076_230
 }

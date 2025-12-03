@@ -1,11 +1,11 @@
-import day2/day2
+import day3/day3
 import gleam/int
 import gleam/io
 import helpers
 
 pub fn main() -> Nil {
-  let input = helpers.read_lines_from_file("./src/day2/input.txt")
-  let result = day2.part1(input)
+  let input = helpers.read_lines_from_file("./src/day3/input.txt")
+  let result = day3.part2(input)
 
-  io.println("Result of day2_part1_simple_test: " <> int.to_string(result))
+  io.println("Result: " <> int.to_string(result))
 }
