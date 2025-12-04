@@ -5,6 +5,17 @@ import gleam/string
 type Position =
   #(Int, Int)
 
+const neighbours_vectors = [
+  #(0, -1),
+  #(0, 1),
+  #(-1, 0),
+  #(1, 0),
+  #(-1, -1),
+  #(1, -1),
+  #(-1, 1),
+  #(1, 1),
+]
+
 pub fn part1(input: List(String)) -> Int {
   let dict: dict.Dict(Position, String) = dict.new()
   let map =
@@ -15,25 +26,6 @@ pub fn part1(input: List(String)) -> Int {
         dict.insert(inner_acc, #(column_index, row_index), char)
       })
     })
-
-  let neighbours_vectors = [
-    #(0, -1),
-    // Up
-    #(0, 1),
-    // Down
-    #(-1, 0),
-    // Left
-    #(1, 0),
-    // Right
-    #(-1, -1),
-    // Top-left
-    #(1, -1),
-    // Top-right
-    #(-1, 1),
-    // Bottom-left
-    #(1, 1),
-    // Bottom-right
-  ]
 
   dict.fold(map, 0, fn(acc, position, char) {
     case is_paper(char) {
@@ -88,25 +80,6 @@ fn is_paper(char: String) -> Bool {
 }
 
 fn keep_removing(map: dict.Dict(Position, String), current_sum: Int) -> Int {
-  let neighbours_vectors = [
-    #(0, -1),
-    // Up
-    #(0, 1),
-    // Down
-    #(-1, 0),
-    // Left
-    #(1, 0),
-    // Right
-    #(-1, -1),
-    // Top-left
-    #(1, -1),
-    // Top-right
-    #(-1, 1),
-    // Bottom-left
-    #(1, 1),
-    // Bottom-right
-  ]
-
   let postiions_to_delete =
     dict.fold(map, [], fn(acc, position, char) {
       case is_paper(char) {
