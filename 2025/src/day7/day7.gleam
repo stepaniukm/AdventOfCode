@@ -86,6 +86,7 @@ pub fn part1(input: List(String)) -> Int {
 }
 
 pub fn part2(input: List(String)) -> Int {
+  let input_length = list.length(input)
   let first_line =
     list.first(input)
     |> result.unwrap("")
@@ -102,7 +103,7 @@ pub fn part2(input: List(String)) -> Int {
     })
 
   let final_map =
-    list.range(0, list.length(input))
+    list.range(0, input_length)
     |> list.fold(map, fn(acc, row_index) {
       list.range(0, first_line_length)
       |> list.fold(acc, fn(inner_acc, column_index) {
@@ -152,9 +153,123 @@ pub fn part2(input: List(String)) -> Int {
       })
     })
 
-  count_paths(final_map)
+  let start =
+    dict.filter(map, fn(_, value) { value == "S" })
+    |> dict.keys
+    |> list.first
+    |> result.unwrap(#(0, 0))
+
+  count_paths(final_map, start, dict.new(), input_length).0
 }
 
-fn count_paths(map: dict.Dict(#(Int, Int), String)) -> Int {
-  todo
+type WorkItem {
+  Explore(point: #(Int, Int))
+  Combine(point: #(Int, Int), left_point: #(Int, Int), right_point: #(Int, Int))
+}
+
+fn count_paths(
+  map: dict.Dict(#(Int, Int), String),
+  start: #(Int, Int),
+  cache: dict.Dict(#(Int, Int), Int),
+  max: Int,
+) -> #(Int, dict.Dict(#(Int, Int), Int)) {
+  count_paths_loop(map, [Explore(start)], cache, max, start)
+}
+
+fn count_paths_loop(
+  map: dict.Dict(#(Int, Int), String),
+  stack: List(WorkItem),
+  cache: dict.Dict(#(Int, Int), Int),
+  max: Int,
+  start: #(Int, Int),
+) -> #(Int, dict.Dict(#(Int, Int), Int)) {
+  case stack {
+    [] -> {
+      let final_result =
+        dict.get(cache, start)
+        |> result.unwrap(0)
+      #(final_result, cache)
+    }
+    [first, ..rest] -> {
+      case first {
+        Explore(point) -> {
+          let point_value =
+            dict.get(map, point)
+            |> result.unwrap("")
+          case dict.get(cache, point) {
+            Ok(_) -> {
+              count_paths_loop(map, rest, cache, max, start)
+            }
+            Error(_) -> {
+              case point.1 >= max - 1 {
+                True -> {
+                  let new_cache = dict.insert(cache, point, 1)
+                  count_paths_loop(map, rest, new_cache, max, start)
+                }
+                False -> {
+                  case point_value == "^" {
+                    True -> {
+                      let left_point = #(point.0 - 1, point.1)
+                      let right_point = #(point.0 + 1, point.1)
+
+                      let left_value =
+                        dict.get(map, left_point)
+                        |> result.unwrap("")
+
+                      let right_value =
+                        dict.get(map, right_point)
+                        |> result.unwrap("")
+
+                      let new_stack = [
+                        Combine(point, left_point, right_point),
+                        ..rest
+                      ]
+
+                      let new_stack = case right_value == "|" {
+                        True -> [Explore(right_point), ..new_stack]
+                        False -> new_stack
+                      }
+
+                      let new_stack = case left_value == "|" {
+                        True -> [Explore(left_point), ..new_stack]
+                        False -> new_stack
+                      }
+
+                      count_paths_loop(map, new_stack, cache, max, start)
+                    }
+                    False -> {
+                      let below_point = #(point.0, point.1 + 1)
+                      let new_stack = [
+                        Explore(below_point),
+                        Combine(point, below_point, below_point),
+                        ..rest
+                      ]
+                      count_paths_loop(map, new_stack, cache, max, start)
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        Combine(point, left_point, right_point) -> {
+          let left_val =
+            dict.get(cache, left_point)
+            |> result.unwrap(0)
+
+          let right_val = case left_point == right_point {
+            True -> 0
+            False ->
+              dict.get(cache, right_point)
+              |> result.unwrap(0)
+          }
+
+          let sum = left_val + right_val
+
+          let new_cache = dict.insert(cache, point, sum)
+          count_paths_loop(map, rest, new_cache, max, start)
+        }
+      }
+    }
+  }
 }
